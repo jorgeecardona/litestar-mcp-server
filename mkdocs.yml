@@ -1,0 +1,86 @@
+site_name: litestar-mcp-server
+site_description: "A small MCP server for Litestar, with no SDK: tools with titles, read or destructive hints and scopes, over streamable HTTP"
+site_url: https://cardona-oss.gitlab.io/litestar-mcp-server/
+repo_url: https://gitlab.com/cardona-oss/litestar-mcp-server
+repo_name: cardona-oss/litestar-mcp-server
+copyright: MIT &copy; Jorge Cardona
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: [".", "docs"]
+      check_paths: true
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+
+# docs/issues/ is the follow-up register (`cabildo issues`), read in the repo, not published:
+# its links point at source files that are not part of the site, so --strict would fail on them.
+exclude_docs: |
+  issues/
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_root_heading: true
+            heading_level: 3
+            show_source: true
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+            docstring_section_style: spacy
+
+  - llmstxt:
+      markdown_description: "A small MCP server for Litestar, with no SDK: tools with titles, read or destructive hints and scopes, over streamable HTTP."
+      full_output: llms-full.txt
+      sections:
+        Usage documentation:
+          - index.md
+        API reference:
+          - api.md
+
+nav:
+  - Home: index.md
+  - API reference: api.md
+  - Changelog: changelog.md
