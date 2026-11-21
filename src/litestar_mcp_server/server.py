@@ -19,10 +19,12 @@ from litestar_mcp_server.protocol import (
     PARSE_ERROR,
     SUPPORTED_PROTOCOL_VERSIONS,
     Empty,
+    ImageContent,
     InitializeParams,
     InitializeResult,
     JsonRpcRequest,
     ServerInfo,
+    TextContent,
     ToolCallParams,
     ToolCallResult,
     ToolsListResult,
@@ -30,7 +32,7 @@ from litestar_mcp_server.protocol import (
     result_response,
     text_result,
 )
-from litestar_mcp_server.tools import Arguments, JsonValue, Tool, ToolError
+from litestar_mcp_server.tools import Arguments, Blocks, JsonValue, Tool, ToolError
 
 logger = logging.getLogger("litestar_mcp_server")
 
@@ -202,11 +204,19 @@ class McpServer[Ctx]:
         except Exception:
             logger.exception("tool %s failed", tool.name)
             return text_result(_UNEXPECTED, is_error=True)
-        text = output if isinstance(output, str) else msgspec.json.encode(output).decode()
-        if len(text.encode()) > self.config.max_result_bytes:
+        if isinstance(output, Blocks):
+            content = output.items
+            size = sum(
+                len((b.data if isinstance(b, ImageContent) else b.text).encode()) for b in content
+            )
+        else:
+            text = output if isinstance(output, str) else msgspec.json.encode(output).decode()
+            content = (TextContent(text=text),)
+            size = len(text.encode())
+        if size > self.config.max_result_bytes:
             return text_result(
                 f"the result of {tool.name} is too large to return. "
                 "Ask for fewer items, a shorter time range or a narrower filter.",
                 is_error=True,
             )
-        return text_result(text)
+        return ToolCallResult(content=content)

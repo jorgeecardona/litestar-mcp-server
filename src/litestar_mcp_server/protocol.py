@@ -109,6 +109,17 @@ class TextContent(msgspec.Struct, frozen=True, rename="camel"):
     type: str = "text"
 
 
+class ImageContent(msgspec.Struct, frozen=True, rename="camel"):
+    """A picture for the agent: base64 bytes and their MIME type (``image/png``)."""
+
+    data: str
+    mime_type: str
+    type: str = "image"
+
+
+type ContentBlock = TextContent | ImageContent
+
+
 class ToolCallResult(msgspec.Struct, frozen=True, rename="camel"):
     """A tool outcome.
 
@@ -116,7 +127,7 @@ class ToolCallResult(msgspec.Struct, frozen=True, rename="camel"):
     are for protocol breakage only.
     """
 
-    content: tuple[TextContent, ...] = ()
+    content: tuple[ContentBlock, ...] = ()
     is_error: bool = False
 
 

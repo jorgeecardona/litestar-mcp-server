@@ -18,7 +18,7 @@ from enum import Enum
 
 import msgspec
 
-from litestar_mcp_server.protocol import ToolAnnotations, ToolDescriptor
+from litestar_mcp_server.protocol import ContentBlock, ToolAnnotations, ToolDescriptor
 
 # What a JSON document can hold. Used for typing only; values are decoded by ``msgspec.json``.
 type JsonValue = str | int | float | bool | list[JsonValue] | dict[str, JsonValue] | None
@@ -107,7 +107,18 @@ class Arguments:
             raise ToolError(f"argument {key!r} is not a valid id: {raw!r}") from None
 
 
-# The handler returns text, or anything ``msgspec`` can encode (a Struct, a dataclass, a dict). It
+@dataclass(frozen=True, slots=True)
+class Blocks:
+    """A handler result made of text and picture blocks, sent to the agent as they are.
+
+    Return it instead of a string or an object when the agent must see an image. Build the blocks
+    with ``TextContent`` and ``ImageContent``. The size cap counts every block.
+    """
+
+    items: tuple[ContentBlock, ...]
+
+
+# The handler returns text, a ``Blocks``, or anything ``msgspec`` can encode (a Struct, a dataclass, a dict). It
 # is declared ``object`` because that is exactly the contract: msgspec decides, at the boundary.
 type ToolOutput = object
 

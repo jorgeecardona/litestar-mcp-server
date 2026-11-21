@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2]
+
+### Added
+
+- `Blocks`, `TextContent` and `ImageContent`: a tool can return text and pictures to the agent.
+
+## [0.0.1]
+
 ### Added
 
 - `McpServer` with `initialize`, `ping`, `tools/list` and `tools/call`; protocol version negotiation.

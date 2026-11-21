@@ -3,7 +3,17 @@ from typing import Any
 
 import pytest
 
-from litestar_mcp_server import McpServer, Tool
+from litestar_mcp_server import (
+    Arguments,
+    Blocks,
+    Effect,
+    ImageContent,
+    McpConfig,
+    McpServer,
+    TextContent,
+    Tool,
+    object_schema,
+)
 from tests.conftest import Ctx
 
 ALICE = Ctx(user="alice")
@@ -215,3 +225,41 @@ def test_required_must_be_declared() -> None:
 
     with pytest.raises(ValueError, match="not declared"):
         object_schema({}, required=("x",))
+
+
+async def _plot(ctx: Ctx, args: Arguments) -> Blocks:
+    return Blocks(
+        (TextContent(text="a plot"), ImageContent(data="iVBORw0KGgo=", mime_type="image/png"))
+    )
+
+
+def _plot_server(max_result_bytes: int) -> McpServer[Ctx]:
+    tool = Tool(
+        name="plot",
+        title="Get a plot",
+        effect=Effect.READ,
+        description="A text block and a picture.",
+        input_schema=object_schema(),
+        handler=_plot,
+    )
+    config = McpConfig(name="t", version="1", max_result_bytes=max_result_bytes)
+    return McpServer(config=config, tools=[tool])
+
+
+@pytest.mark.anyio
+async def test_blocks_are_sent_as_text_and_image_content() -> None:
+    _, body = await call(_plot_server(1000), "tools/call", {"name": "plot", "arguments": {}})
+    result = body["result"]
+    assert result["isError"] is False
+    assert result["content"] == [
+        {"text": "a plot", "type": "text"},
+        {"data": "iVBORw0KGgo=", "mimeType": "image/png", "type": "image"},
+    ]
+
+
+@pytest.mark.anyio
+async def test_the_size_cap_counts_image_data() -> None:
+    _, body = await call(_plot_server(10), "tools/call", {"name": "plot", "arguments": {}})
+    result = body["result"]
+    assert result["isError"] is True
+    assert "too large" in result["content"][0]["text"]
