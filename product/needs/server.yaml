@@ -1,0 +1,97 @@
+who: developer adding an MCP endpoint to a Litestar application
+
+needs:
+
+  - id: LMS-1
+    text: >
+      When the developer mounts litestar-mcp-server, they can serve MCP tools over a single POST
+      route with no second web stack.
+    must: true
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#why-litestar-mcp-server"}
+    proofs:
+      - "test:tests/test_http.py::test_get_is_405"
+      - "test:tests/test_http.py::test_context_comes_from_litestar_dependencies"
+
+  - id: LMS-2
+    text: >
+      When the developer declares a tool, they can assign an Effect (READ, ADDITIVE, or DESTRUCTIVE)
+      and the correct MCP hints are set automatically.
+    must: true
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#key-features"}
+    proofs:
+      - "test:tests/test_server.py::test_list_has_title_and_hints_on_every_tool"
+
+  - id: LMS-3
+    text: >
+      When the developer declares a tool, they can give it a title of at most 64 characters, and a
+      title that is too long is refused at startup.
+    must: true
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#key-features"}
+    proofs:
+      - "test:tests/test_server.py::test_list_has_title_and_hints_on_every_tool"
+      - "test:tests/test_server.py::test_a_title_over_64_characters_is_refused"
+
+  - id: LMS-4
+    text: >
+      When a tool has a scope, the server enforces it per caller, and a caller without that scope
+      gets a readable error.
+    must: true
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#key-features"}
+    proofs:
+      - "test:tests/test_server.py::test_scope_is_enforced_per_tool"
+      - "test:tests/test_server.py::test_scopes_are_not_checked_when_not_used"
+      - "test:tests/test_http.py::test_read_token_cannot_call_a_write_tool"
+
+  - id: LMS-5
+    text: >
+      When a tool is marked for operators only, non-operator callers cannot see or call it.
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#key-features"}
+    proofs:
+      - "test:tests/test_server.py::test_operator_tools_are_hidden_from_others"
+      - "test:tests/test_server.py::test_hidden_tool_answers_as_unknown"
+
+  - id: LMS-6
+    text: >
+      When a tool raises a known error or receives a missing argument, the agent receives a readable
+      result, not an HTTP error or an exception traceback.
+    must: true
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#key-features"}
+    proofs:
+      - "test:tests/test_server.py::test_tool_error_message_reaches_the_agent"
+      - "test:tests/test_server.py::test_missing_argument_is_a_readable_error"
+
+  - id: LMS-7
+    text: >
+      When a tool raises an unexpected exception, the agent receives a safe error result and no
+      internal details are leaked.
+    must: true
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#key-features"}
+    proofs:
+      - "test:tests/test_server.py::test_unexpected_exception_does_not_leak_details"
+
+  - id: LMS-8
+    text: >
+      When a tool result exceeds the size cap, the server refuses it with advice rather than
+      sending an oversized payload.
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#key-features"}
+    proofs:
+      - "test:tests/test_server.py::test_oversized_result_is_refused_with_advice"
+      - "test:tests/test_server.py::test_the_size_cap_counts_image_data"
+
+  - id: LMS-9
+    text: >
+      When the developer uses Litestar dependency injection to build the tool context, the server
+      resolves it through the normal Litestar DI system.
+    must: true
+    sources:
+      - {kind: secondary, date: 2026-11-21, locator: "README.md#quickstart"}
+    proofs:
+      - "test:tests/test_http.py::test_context_comes_from_litestar_dependencies"
