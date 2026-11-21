@@ -19,7 +19,6 @@ from litestar_mcp_server.protocol import (
     PARSE_ERROR,
     SUPPORTED_PROTOCOL_VERSIONS,
     Empty,
-    ImageContent,
     InitializeParams,
     InitializeResult,
     JsonRpcRequest,
@@ -28,6 +27,7 @@ from litestar_mcp_server.protocol import (
     ToolCallParams,
     ToolCallResult,
     ToolsListResult,
+    block_size,
     error_response,
     result_response,
     text_result,
@@ -206,9 +206,7 @@ class McpServer[Ctx]:
             return text_result(_UNEXPECTED, is_error=True)
         if isinstance(output, Blocks):
             content = output.items
-            size = sum(
-                len((b.data if isinstance(b, ImageContent) else b.text).encode()) for b in content
-            )
+            size = sum(block_size(b) for b in content)
         else:
             text = output if isinstance(output, str) else msgspec.json.encode(output).decode()
             content = (TextContent(text=text),)

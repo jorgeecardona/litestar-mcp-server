@@ -109,17 +109,19 @@ class Arguments:
 
 @dataclass(frozen=True, slots=True)
 class Blocks:
-    """A handler result made of text and picture blocks, sent to the agent as they are.
+    """A handler result made of content blocks, sent to the agent as they are.
 
-    Return it instead of a string or an object when the agent must see an image. Build the blocks
-    with ``TextContent`` and ``ImageContent``. The size cap counts every block.
+    Return it instead of a string or an object when the agent must get an image, a sound or a file.
+    Build the blocks with ``TextContent``, ``ImageContent``, ``AudioContent`` and
+    ``EmbeddedResource``. The size cap counts every block.
     """
 
     items: tuple[ContentBlock, ...]
 
 
-# The handler returns text, a ``Blocks``, or anything ``msgspec`` can encode (a Struct, a dataclass, a dict). It
-# is declared ``object`` because that is exactly the contract: msgspec decides, at the boundary.
+# The handler returns text, a ``Blocks``, or anything ``msgspec`` can encode (a Struct, a
+# dataclass, a dict). It is declared ``object`` because that is exactly the contract: msgspec
+# decides, at the boundary.
 type ToolOutput = object
 
 

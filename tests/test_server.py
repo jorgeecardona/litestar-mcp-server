@@ -5,8 +5,11 @@ import pytest
 
 from litestar_mcp_server import (
     Arguments,
+    AudioContent,
+    BlobResource,
     Blocks,
     Effect,
+    EmbeddedResource,
     ImageContent,
     McpConfig,
     McpServer,
@@ -263,3 +266,54 @@ async def test_the_size_cap_counts_image_data() -> None:
     result = body["result"]
     assert result["isError"] is True
     assert "too large" in result["content"][0]["text"]
+
+
+async def _files(ctx: Ctx, args: Arguments) -> Blocks:
+    return Blocks(
+        (
+            AudioContent(data="UklGRg==", mime_type="audio/wav"),
+            EmbeddedResource(
+                BlobResource(uri="file:///report.pdf", blob="JVBERi0=", mime_type="application/pdf")
+            ),
+        )
+    )
+
+
+def _files_server(max_result_bytes: int) -> McpServer[Ctx]:
+    tool = Tool(
+        name="files",
+        title="Get a sound and a file",
+        effect=Effect.READ,
+        description="An audio block and a PDF.",
+        input_schema=object_schema(),
+        handler=_files,
+    )
+    config = McpConfig(name="t", version="1", max_result_bytes=max_result_bytes)
+    return McpServer(config=config, tools=[tool])
+
+
+@pytest.mark.anyio
+async def test_audio_and_embedded_resource_follow_the_spec_shape() -> None:
+    _, body = await call(_files_server(1000), "tools/call", {"name": "files", "arguments": {}})
+    result = body["result"]
+    assert result["isError"] is False
+    assert result["content"] == [
+        {"data": "UklGRg==", "mimeType": "audio/wav", "type": "audio"},
+        {
+            "resource": {
+                "blob": "JVBERi0=",
+                "mimeType": "application/pdf",
+                "uri": "file:///report.pdf",
+            },
+            "type": "resource",
+        },
+    ]
+
+
+@pytest.mark.anyio
+async def test_the_size_cap_counts_audio_and_blob_data() -> None:
+    # 8 bytes of audio + 8 bytes of blob = 16: a cap of 15 refuses, a cap of 16 allows.
+    _, refused = await call(_files_server(15), "tools/call", {"name": "files", "arguments": {}})
+    _, allowed = await call(_files_server(16), "tools/call", {"name": "files", "arguments": {}})
+    assert refused["result"]["isError"] is True
+    assert allowed["result"]["isError"] is False

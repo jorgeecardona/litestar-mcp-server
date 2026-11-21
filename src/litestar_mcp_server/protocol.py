@@ -117,7 +117,41 @@ class ImageContent(msgspec.Struct, frozen=True, rename="camel"):
     type: str = "image"
 
 
-type ContentBlock = TextContent | ImageContent
+class AudioContent(msgspec.Struct, frozen=True, rename="camel"):
+    """A sound for the agent: base64 bytes and their MIME type (``audio/wav``)."""
+
+    data: str
+    mime_type: str
+    type: str = "audio"
+
+
+class BlobResource(msgspec.Struct, frozen=True, rename="camel"):
+    """Any binary file: a ``uri`` that names it, its base64 bytes and its MIME type."""
+
+    uri: str
+    blob: str
+    mime_type: str
+
+
+class EmbeddedResource(msgspec.Struct, frozen=True, rename="camel"):
+    """A binary file sent inside the tool result, for types with no block of their own (PDF, zip)."""
+
+    resource: BlobResource
+    type: str = "resource"
+
+
+type ContentBlock = TextContent | ImageContent | AudioContent | EmbeddedResource
+
+
+def block_size(block: ContentBlock) -> int:
+    """Return the bytes a block adds to a result: its text, or its base64 payload."""
+    match block:
+        case TextContent():
+            return len(block.text.encode())
+        case ImageContent() | AudioContent():
+            return len(block.data.encode())
+        case EmbeddedResource():
+            return len(block.resource.blob.encode())
 
 
 class ToolCallResult(msgspec.Struct, frozen=True, rename="camel"):

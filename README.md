@@ -82,6 +82,8 @@ characters and an effect, and the hints come from the effect.
 - `Effect.READ`, `ADDITIVE` or `DESTRUCTIVE` per tool, giving `readOnlyHint` or `destructiveHint`.
 - `title` at the top level and in `annotations`.
 - Per-tool `scope`, and per-caller `visible` (operator tools do not exist for others).
+- A tool can return text, images, sound or any binary file (`Blocks` of `TextContent`,
+  `ImageContent`, `AudioContent`, `EmbeddedResource`).
 - Failures reach the agent as readable results; unexpected errors never leak details.
 - A cap on result size, so a tool cannot dump a database.
 - Typed argument getters, tiny JSON Schema helpers, frozen dataclasses throughout.

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3]
+
+### Added
+
+- `AudioContent` and `EmbeddedResource` (with `BlobResource`): a tool can return a sound or any
+  binary file, such as a PDF or a zip.
+
 ## [0.0.2]
 
 ### Added
