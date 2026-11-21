@@ -1,11 +1,27 @@
+<div align="center">
+
 # litestar-mcp-server
 
-[![pipeline status](https://gitlab.com/cardona-oss/litestar-mcp-server/badges/main/pipeline.svg)](https://gitlab.com/cardona-oss/litestar-mcp-server/-/pipelines)
-[![PyPI version](https://img.shields.io/pypi/v/litestar-mcp-server.svg)](https://pypi.org/project/litestar-mcp-server/)
-[![Python versions](https://img.shields.io/pypi/pyversions/litestar-mcp-server.svg)](https://pypi.org/project/litestar-mcp-server/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<a href="https://pypi.org/project/litestar-mcp-server/"><img alt="pypi" src="https://img.shields.io/pypi/v/litestar-mcp-server?label=pypi&labelColor=111"></a>
+<a href="https://pypi.org/project/litestar-mcp-server/"><img alt="python" src="https://img.shields.io/pypi/pyversions/litestar-mcp-server?label=python&labelColor=111"></a>
+<a href="https://cardona-oss.gitlab.io/litestar-mcp-server/"><img alt="docs" src="https://img.shields.io/badge/docs-cardona--oss.gitlab.io-c9a227?labelColor=111"></a>
+<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/pipelines"><img alt="pipeline" src="https://img.shields.io/gitlab/pipeline-status/cardona-oss%2Flitestar-mcp-server?branch=main&label=pipeline&labelColor=111"></a>
+<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue?labelColor=111"></a>
 
-A small MCP server for Litestar, with no SDK: tools with titles, read or destructive hints and scopes, over streamable HTTP
+<a href="https://cardona-oss.gitlab.io/litestar-mcp-server/">Documentation</a> ·
+<a href="https://cardona-oss.gitlab.io/litestar-mcp-server/api/">API reference</a> ·
+<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md">Changelog</a> ·
+<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/issues">Issues</a> ·
+<a href="https://gitlab.com/cardona-oss/litestar-mcp-server">Source</a>
+
+</div>
+
+---
+
+## Overview
+
+A small MCP server for Litestar, with no SDK: tools with titles, read or destructive hints and
+scopes, over streamable HTTP.
 
 ## Install
 
@@ -79,14 +95,14 @@ Not included: resources, prompts, SSE streams, sessions. Tools only.
 - **Source:** https://gitlab.com/cardona-oss/litestar-mcp-server
 - **Issues:** https://gitlab.com/cardona-oss/litestar-mcp-server/-/issues
 - **PyPI:** https://pypi.org/project/litestar-mcp-server/
-- **Changelog:** [CHANGELOG.md](CHANGELOG.md)
+- **Changelog:** [CHANGELOG.md](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md)
 
 ## Contributing
 
 Developer setup, the dev loop, and the release process live in
-[CONTRIBUTING.md](CONTRIBUTING.md). In short: `uv sync && make install-hooks`, then
+[CONTRIBUTING.md](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CONTRIBUTING.md). In short: `uv sync && make install-hooks`, then
 `make check` runs the same gate CI runs.
 
 ## License
 
-MIT © 2026 Jorge Cardona (see [LICENSE](LICENSE)).
+MIT © 2026 Jorge Cardona (see [LICENSE](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/LICENSE)).
