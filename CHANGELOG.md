@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4]
+
+### Changed
+
+- A tool that is not read-only now sends `readOnlyHint: false` as well as `destructiveHint`. The
+  Claude directory's form flags every write tool that lacks `readOnlyHint` (seen 2026-11-21 on tyko:
+  8 suggestions).
+
 ## [0.0.3]
 
 ### Added

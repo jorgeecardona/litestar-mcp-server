@@ -106,6 +106,7 @@ async def test_list_has_title_and_hints_on_every_tool(server: McpServer[Ctx]) ->
     assert tools["list_things"]["annotations"] == {"title": "List things", "readOnlyHint": True}
     assert tools["create_thing"]["annotations"] == {
         "title": "Create a thing",
+        "readOnlyHint": False,
         "destructiveHint": False,
     }
     for tool in tools.values():

@@ -79,7 +79,7 @@ characters and an effect, and the hints come from the effect.
 ## Key features
 
 - Stateless streamable HTTP (2025-11-25, 2025-06-18, 2025-03-26): one JSON object per POST, 405 on GET.
-- `Effect.READ`, `ADDITIVE` or `DESTRUCTIVE` per tool, giving `readOnlyHint` or `destructiveHint`.
+- `Effect.READ`, `ADDITIVE` or `DESTRUCTIVE` per tool, giving `readOnlyHint: true`, or `readOnlyHint: false` with `destructiveHint`.
 - `title` at the top level and in `annotations`.
 - Per-tool `scope`, and per-caller `visible` (operator tools do not exist for others).
 - A tool can return text, images, sound or any binary file (`Blocks` of `TextContent`,

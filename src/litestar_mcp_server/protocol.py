@@ -77,8 +77,10 @@ class InitializeResult(msgspec.Struct, frozen=True, rename="camel"):
 class ToolAnnotations(msgspec.Struct, frozen=True, rename="camel", omit_defaults=True):
     """The hints a connector directory reads.
 
-    A read tool carries ``readOnlyHint: true``; every other tool carries ``destructiveHint``
-    (true or false), never both.
+    A read tool carries ``readOnlyHint: true`` and nothing else. Every other tool carries
+    ``readOnlyHint: false`` and ``destructiveHint`` (true or false). The directory's scan asks
+    for ``readOnlyHint`` on every tool, and ``destructiveHint`` only means something when
+    ``readOnlyHint`` is false (MCP spec).
     """
 
     title: str

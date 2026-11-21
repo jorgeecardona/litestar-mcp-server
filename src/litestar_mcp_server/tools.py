@@ -4,7 +4,8 @@ A tool has a ``title`` and an ``effect``. The effect is one value, so a tool can
 destructive at once, and the directory hints come out right by construction:
 
 - ``Effect.READ``: changes nothing, ``readOnlyHint: true``;
-- ``Effect.ADDITIVE``: adds or moves data and removes or publishes nothing, ``destructiveHint: false``;
+- ``Effect.ADDITIVE``: adds or moves data and removes or publishes nothing, ``readOnlyHint: false``
+  and ``destructiveHint: false``;
 - ``Effect.DESTRUCTIVE``: overwrites, deletes, publishes, runs code or messages someone,
   ``destructiveHint: true``.
 """
@@ -156,7 +157,11 @@ class Tool[Ctx]:
     def annotations(self) -> ToolAnnotations:
         if self.effect is Effect.READ:
             return ToolAnnotations(title=self.title, read_only_hint=True)
-        return ToolAnnotations(title=self.title, destructive_hint=self.effect is Effect.DESTRUCTIVE)
+        return ToolAnnotations(
+            title=self.title,
+            read_only_hint=False,
+            destructive_hint=self.effect is Effect.DESTRUCTIVE,
+        )
 
     def descriptor(self) -> ToolDescriptor:
         return ToolDescriptor(
