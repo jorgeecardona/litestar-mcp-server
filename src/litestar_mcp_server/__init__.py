@@ -26,7 +26,7 @@ from litestar_mcp_server.tools import (
     string,
 )
 
-__version__ = "0.0.4"  # the single source of truth; pyproject reads it via [tool.hatch.version]
+__version__ = "0.0.5"  # the single source of truth; pyproject reads it via [tool.hatch.version]
 
 __all__ = [
     "LATEST_PROTOCOL_VERSION",

@@ -29,7 +29,11 @@ scopes, over streamable HTTP.
 pip install litestar-mcp-server
 ```
 
-Requires Python 3.12+.
+Requires Python 3.12+. To write a tool's arguments as a pydantic model, add the extra:
+
+```bash
+pip install "litestar-mcp-server[pydantic]"
+```
 
 ## Quickstart
 
@@ -68,6 +72,32 @@ Add `guards=[...]` for authentication and `scopes=lambda request: ...` so a tool
 checked. With [litestar-oauth-server](https://pypi.org/project/litestar-oauth-server/) those are
 `bearer_guard(...)` and `verified_token(request).scopes`. See `examples/basic.py`.
 
+## Arguments as a pydantic model
+
+`model_tool` (from `litestar_mcp_server.pydantic`, needs the extra) takes a model instead of a
+hand-written schema. The model gives the `input_schema` and checks the arguments, and the handler
+gets the model.
+
+```python
+from pydantic import BaseModel, Field
+from litestar_mcp_server import Effect
+from litestar_mcp_server.pydantic import model_tool
+
+class AddNote(BaseModel):
+    text: str = Field(min_length=1, description="the note")
+
+async def add_note(ctx: Ctx, args: AddNote) -> str:
+    return f"added {args.text!r} for {ctx.user}"
+
+tool = model_tool(
+    name="add_note", title="Add a note", effect=Effect.ADDITIVE,
+    description="Add a note for the signed-in user.", model=AddNote, handler=add_note,
+)
+```
+
+Wrong arguments reach the agent as one readable line per field, for example
+`invalid arguments: text: String should have at least 1 character`. The value sent is not repeated.
+
 ## Why litestar-mcp-server
 
 An MCP endpoint for a SaaS product is a small thing: JSON-RPC over one POST route. The official SDK
@@ -87,7 +117,7 @@ characters and an effect, and the hints come from the effect.
 - Failures reach the agent as readable results; unexpected errors never leak details.
 - A cap on result size, so a tool cannot dump a database.
 - Typed argument getters, tiny JSON Schema helpers, frozen dataclasses throughout.
-- No SDK and no pydantic: Litestar and msgspec only.
+- No SDK. Litestar and msgspec only; pydantic is an optional extra.
 
 Not included: resources, prompts, SSE streams, sessions. Tools only.
 

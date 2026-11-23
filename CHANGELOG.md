@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5]
+
+### Added
+
+- Extra `pydantic`: `model_tool` (in `litestar_mcp_server.pydantic`) builds a tool from a pydantic
+  model. The model gives the input schema and checks the arguments, and the handler gets the model.
+
 ## [0.0.4]
 
 ### Changed
