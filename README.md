@@ -1,27 +1,29 @@
-<div align="center">
+<h1 align="center">litestar-mcp-server</h1>
 
-# litestar-mcp-server
+<p align="center"><strong>Add MCP tools to a Litestar app as a route, with the auth and dependency injection the app already has.</strong></p>
 
-<a href="https://pypi.org/project/litestar-mcp-server/"><img alt="pypi" src="https://img.shields.io/pypi/v/litestar-mcp-server?label=pypi&labelColor=111"></a>
-<a href="https://pypi.org/project/litestar-mcp-server/"><img alt="python" src="https://img.shields.io/pypi/pyversions/litestar-mcp-server?label=python&labelColor=111"></a>
-<a href="https://cardona-oss.gitlab.io/litestar-mcp-server/"><img alt="docs" src="https://img.shields.io/badge/docs-cardona--oss.gitlab.io-c9a227?labelColor=111"></a>
-<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/pipelines"><img alt="pipeline" src="https://img.shields.io/gitlab/pipeline-status/cardona-oss%2Flitestar-mcp-server?branch=main&label=pipeline&labelColor=111"></a>
-<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue?labelColor=111"></a>
+<p align="center">
+  <a href="https://pypi.org/project/litestar-mcp-server/"><img alt="PyPI" src="https://img.shields.io/pypi/v/litestar-mcp-server?style=flat-square"></a>
+  <a href="https://pypi.org/project/litestar-mcp-server/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/litestar-mcp-server?style=flat-square"></a>
+  <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/pipelines"><img alt="Pipeline" src="https://img.shields.io/gitlab/pipeline-status/cardona-oss%2Flitestar-mcp-server?branch=main&style=flat-square"></a>
+  <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square"></a>
+</p>
 
-<a href="https://cardona-oss.gitlab.io/litestar-mcp-server/">Documentation</a> ·
-<a href="https://cardona-oss.gitlab.io/litestar-mcp-server/api/">API reference</a> ·
-<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md">Changelog</a> ·
-<a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/issues">Issues</a> ·
-<a href="https://gitlab.com/cardona-oss/litestar-mcp-server">Source</a>
-
-</div>
+<p align="center">
+  <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/README.md#quickstart">Quickstart</a> ·
+  <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/README.md#why-litestar-mcp-server">Why litestar-mcp-server</a> ·
+  <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md">Changelog</a>
+</p>
 
 ---
 
 ## Overview
 
-A small MCP server for Litestar, with no SDK: tools with titles, read or destructive hints and
-scopes, over streamable HTTP.
+Route handlers that serve MCP tools from a Litestar app over streamable HTTP, without the MCP SDK. Tools have
+titles, read or destructive hints and scopes. Auth and dependency injection are the ones the
+app already uses.
+
+Status: beta.
 
 ## Install
 
@@ -106,10 +108,14 @@ normal Litestar route, so auth, dependency injection and logging are the ones yo
 It also makes the connector-directory rules hard to forget: every tool needs a title of at most 64
 characters and an effect, and the hints come from the effect.
 
+Use the official SDK when you need resources, prompts, SSE streams or sessions. This library
+has tools only.
+
 ## Key features
 
 - Stateless streamable HTTP (2025-11-25, 2025-06-18, 2025-03-26): one JSON object per POST, 405 on GET.
-- `Effect.READ`, `ADDITIVE` or `DESTRUCTIVE` per tool, giving `readOnlyHint: true`, or `readOnlyHint: false` with `destructiveHint`.
+- `Effect.READ`, `ADDITIVE` or `DESTRUCTIVE` per tool, giving `readOnlyHint: true`, or
+  `readOnlyHint: false` with `destructiveHint`.
 - `title` at the top level and in `annotations`.
 - Per-tool `scope`, and per-caller `visible` (operator tools do not exist for others).
 - A tool can return text, images, sound or any binary file (`Blocks` of `TextContent`,
@@ -119,15 +125,16 @@ characters and an effect, and the hints come from the effect.
 - Typed argument getters, tiny JSON Schema helpers, frozen dataclasses throughout.
 - No SDK. Litestar and msgspec only; pydantic is an optional extra.
 
-Not included: resources, prompts, SSE streams, sessions. Tools only.
+## Limits
+
+- Resources, prompts, SSE streams and sessions are not built. Tools only.
+- The stateless protocol (one POST per call) means no server-initiated messages.
 
 ## Links
 
-- **Documentation:** https://cardona-oss.gitlab.io/litestar-mcp-server/
-- **Source:** https://gitlab.com/cardona-oss/litestar-mcp-server
-- **Issues:** https://gitlab.com/cardona-oss/litestar-mcp-server/-/issues
-- **PyPI:** https://pypi.org/project/litestar-mcp-server/
-- **Changelog:** [CHANGELOG.md](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md)
+- Repository: <https://gitlab.com/cardona-oss/litestar-mcp-server>
+- PyPI: <https://pypi.org/project/litestar-mcp-server/>
+- Changelog: [CHANGELOG.md](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md)
 
 ## Contributing
 
@@ -137,4 +144,4 @@ Developer setup, the dev loop, and the release process live in
 
 ## License
 
-MIT © 2026 Jorge Cardona (see [LICENSE](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/LICENSE)).
+MIT © Jorge Cardona (see [LICENSE](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/LICENSE)).

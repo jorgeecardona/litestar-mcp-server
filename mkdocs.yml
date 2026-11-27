@@ -1,5 +1,5 @@
 site_name: litestar-mcp-server
-site_description: "A small MCP server for Litestar, with no SDK: tools with titles, read or destructive hints and scopes, over streamable HTTP"
+site_description: Route handlers that serve MCP tools from a Litestar app over streamable HTTP, without the MCP SDK
 site_url: https://cardona-oss.gitlab.io/litestar-mcp-server/
 repo_url: https://gitlab.com/cardona-oss/litestar-mcp-server
 repo_name: cardona-oss/litestar-mcp-server
@@ -72,7 +72,7 @@ plugins:
             docstring_section_style: spacy
 
   - llmstxt:
-      markdown_description: "A small MCP server for Litestar, with no SDK: tools with titles, read or destructive hints and scopes, over streamable HTTP."
+      markdown_description: "Route handlers that serve MCP tools from a Litestar app over streamable HTTP, without the MCP SDK."
       full_output: llms-full.txt
       sections:
         Usage documentation:

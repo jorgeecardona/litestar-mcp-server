@@ -42,7 +42,7 @@ tasks:
 
   docs:
     command: 'uv run --extra docs mkdocs build --strict'
-    inputs: ['docs/**/*', 'mkdocs.yml', 'src/**/*.py']
+    inputs: ['docs/**/*', 'mkdocs.yml', 'README.md', 'CHANGELOG.md', 'src/**/*.py']
     outputs: ['site']
 
   # CI-side enforcement of "a src/ change carries a version bump" (the non-bypassable
