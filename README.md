@@ -5,13 +5,14 @@
 <p align="center">
   <a href="https://pypi.org/project/litestar-mcp-server/"><img alt="PyPI" src="https://img.shields.io/pypi/v/litestar-mcp-server?style=flat-square"></a>
   <a href="https://pypi.org/project/litestar-mcp-server/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/litestar-mcp-server?style=flat-square"></a>
+  <a href="https://cardona-oss.gitlab.io/litestar-mcp-server/"><img alt="Docs" src="https://img.shields.io/badge/docs-cardona--oss.gitlab.io%2Flitestar--mcp--server-blue?style=flat-square"></a>
   <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/pipelines"><img alt="Pipeline" src="https://img.shields.io/gitlab/pipeline-status/cardona-oss%2Flitestar-mcp-server?branch=main&style=flat-square"></a>
   <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square"></a>
 </p>
 
 <p align="center">
-  <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/README.md#quickstart">Quickstart</a> ·
-  <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/README.md#why-litestar-mcp-server">Why litestar-mcp-server</a> ·
+  <a href="https://cardona-oss.gitlab.io/litestar-mcp-server/">Docs</a> ·
+  <a href="https://cardona-oss.gitlab.io/litestar-mcp-server/api/">API reference</a> ·
   <a href="https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md">Changelog</a>
 </p>
 
@@ -132,6 +133,8 @@ has tools only.
 
 ## Links
 
+- Documentation: <https://cardona-oss.gitlab.io/litestar-mcp-server/>
+- [API reference](https://cardona-oss.gitlab.io/litestar-mcp-server/api/)
 - Repository: <https://gitlab.com/cardona-oss/litestar-mcp-server>
 - PyPI: <https://pypi.org/project/litestar-mcp-server/>
 - Changelog: [CHANGELOG.md](https://gitlab.com/cardona-oss/litestar-mcp-server/-/blob/main/CHANGELOG.md)
